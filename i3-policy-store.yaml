@@ -793,18 +793,35 @@ components:
         - $ref: '#/components/schemas/Condition'
         - type: object
           required:
-            - tag
+            - elements
           properties:
-            tag:
-              type: string
-              enum: [Identifier, Sender, Address, InfoEventCode, InfoValueName]
-            operator:
-              type: string
-              enum: [EQ, SS, NE]
-            content:
-              type: string
+            elements:
+              type: object
+              minProperties: 1
+              properties:
+                identifier:
+                  $ref: '#/components/schemas/CapConditionChild'
+                sender:
+                  $ref: '#/components/schemas/CapConditionChild'
+                address:
+                  $ref: '#/components/schemas/CapConditionChild'
+                infoEventCode:
+                  $ref: '#/components/schemas/CapConditionChild'
+                infoValueName:
+                  $ref: '#/components/schemas/CapConditionChild'
             nonInteractive:
               type: boolean
+    CapConditionChild:
+      type: object
+      required:
+        - operator
+        - content
+      properties:
+        operator:
+          type: string
+          enum: [EQ, SS, NE]
+        content:
+          type: string
     CallingNumberVerificationStatusCondition:
       allOf:
         - $ref: '#/components/schemas/Condition'
