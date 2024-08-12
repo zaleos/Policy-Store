@@ -793,30 +793,25 @@ components:
         - $ref: '#/components/schemas/Condition'
         - type: object
           required:
-            - elements
+            - tests
           properties:
-            elements:
-              type: object
-              minProperties: 1
-              properties:
-                identifier:
-                  $ref: '#/components/schemas/CapConditionChild'
-                sender:
-                  $ref: '#/components/schemas/CapConditionChild'
-                address:
-                  $ref: '#/components/schemas/CapConditionChild'
-                infoEventCode:
-                  $ref: '#/components/schemas/CapConditionChild'
-                infoValueName:
-                  $ref: '#/components/schemas/CapConditionChild'
+            tests:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/CapConditionTest'
             nonInteractive:
               type: boolean
-    CapConditionChild:
+    CapConditionTest:
       type: object
       required:
+        - tag
         - operator
         - content
       properties:
+        tag:
+          type: string
+          enum: [Identifier, Sender, Address, InfoEventCode, InfoValueName]
         operator:
           type: string
           enum: [EQ, SS, NE]
